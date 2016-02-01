@@ -4,11 +4,9 @@ require_dependency "<%= namespaced_path %>/application_controller"
 <% end -%>
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < ApplicationController
-  # before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
   # GET <%= route_url %>
   def index
-    # @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
     load_<%= plural_table_name %>
   end
 
@@ -19,7 +17,6 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # GET <%= route_url %>/new
   def new
-    # @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
     build_<%= singular_table_name %>
   end
 
@@ -31,7 +28,6 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST <%= route_url %>
   def create
     build_<%= singular_table_name %>
-    #@<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
 
     if @<%= orm_instance.save %>
       redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} was successfully created.'" %>
@@ -45,7 +41,6 @@ class <%= controller_class_name %>Controller < ApplicationController
     load_<%= singular_table_name %>
     build_<%= singular_table_name %>
 
-    #if @<%= orm_instance.update("#{singular_table_name}_params") %>
     if @<%= orm_instance.save %>
       redirect_to @<%= singular_table_name %>, notice: <%= "'#{human_name} was successfully updated.'" %>
     else
@@ -67,7 +62,6 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
 
     def load_<%= singular_table_name %>
-      #<%= orm_class.find(class_name, "params[:id]") %>
       @<%= singular_table_name %> ||= <%= singular_table_name %>_scope.where(:id => params[:id]).first
     end
 
